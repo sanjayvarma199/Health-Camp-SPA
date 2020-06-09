@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Raju" content="">
+  <meta name="Keywords" content="">
+  <meta name="SPA1" content="">
+  <title>SPA1</title>
+  <style>
+  table{
+  width:100%;
+border:1px solid blue;
+padding:8px;
+border-collapse: collapse;
+  }
+  th,td{
+  border:1px solid blue;
+  }
+  .tab{
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  }
+  .tab button{
+  background-color:inherit;
+  outline:none;
+  cursor:pointer;
+  padding:14px 16px;
+  }
+  .tab button:hover{
+  background-color:#ddd;
+  }
+  .tab button.active {
+    background-color: #ccc;
+}
+.tabcontent {
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+#save{
+background-color:green;
+}
+  </style>
+<script type="text/javascript"
+    charset="utf-8"
+    src=
+    "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+  </script>
+  <script type="text/javascript"
+      charset="utf-8" src="note.js">
+    </script>
+
+ </head>
+ <body>
+
+ <div class="tab">
+ <label>Health Camp SPA</label>
+<center><button class="tablinks" onclick="opentab(event,'Demographics')">Demographics</button>
+<button class="tablinks" onclick="opentab(event,'HealthVitals')">HealthVitals</button>
+<button class="tablinks" onclick="opentab(event,'Reports')">Reports</button></center>
+ </div></br></br>
+
+ <div id="Demographics" class="tabcontent">
+  <label>First Name:</label><input type="text" id="Fname"></input></br></br>
+  <label>Last Name:</label><input type="text" id="Lname"></input></br></br>
+  <label>Gender</label><select id="Gender"></br></br>
+  <option value="Male">Male</option>
+  <option value="Female">Female</option></select></br></br>
+  <label>Age</label><input type="text" id="Age"></input></br></br>
+  <label>Notes or Other Details</label><input type="text" ></input></br>
+
+<video id="video" width="400" height="300" autoplay></video>
+<a href="#" id="capture">take photo</a>
+<canvas id="canvas" width="400" height="300">
+  <img id="photo">
+</canvas>
+<button id="save" >save</button>
+</form>
+  </div>
+
+<div id="HealthVitals" class="tabcontent">
+  <label>Height:</label><input type="text" id="id5"></input>
+   <div align="center">
+  <label>Medications:</label><textarea id="Medics"></textarea>
+  </div>
+  <label>Weight:</label><input type="text" id="id6"></input>
+  <div align="center">
+    <label>Notes:</label>
+  <textarea type="text" id="Notes"></textarea>
+  </div>
+  <label>Body Temperature:</label><input type="text" id="id7"></input></br></br>
+  <label>Pulse Rate</label><input type="text" id="id8"></input></br></br>
+  <label>BP</label><input type="text" id="id9"></input></br></br>
+ <button id="save_vitals">Save</button>
+</div>
+
+<div id="Reports" class="tabcontent">
+ <table id="table_details">
+ <tr>
+ <th>Name</th>
+ <th>Age</th>
+ <th>Gender</th>
+ <th>photo</th>
+ <th>Medications</th>
+ <th>Notes</th>
+ </tr>
+ </table>
+</div>
+
+ <script>
+ (function(){
+	  var video = document.getElementById('video'),
+	  canvas=document.getElementById('canvas'),
+	  context=canvas.getContext('2d'),
+	 vendorUrl=window.URL || window.webkitURL;
+	 navigator.getMedia = navigator.getUserMedia ||
+							navigator.webkitGetUserMedia ||
+							navigator.mozGetUserMedia ||
+							navigator.msGetUserMedia;
+	navigator.getMedia({
+		video:true,
+		audio:false
+	},function(stream){
+		video.src=vendorUrl.createObjectURL(stream);
+		video.play();
+	},function(error){
+	});
+	document.getElementById('capture').addEventListener('click',function(){
+    context.drawImage(video,0,0,400,300);
+
+  var data = canvas.toDataURL('image/png');
+  $('#photo').attr('src', data);
+	});
+ })();
+
+function opentab(evt,tabname){
+var i,tablinks,tabcontent;
+tabcontent=document.getElementsByClassName("tabcontent");
+for(i=0;i<tabcontent.length;i++)
+	{
+		tabcontent[i].style.display="none";
+	}
+tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace("active", "");
+    }
+	document.getElementById(tabname).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+ </script>
+  </body>
+</html>
